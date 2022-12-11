@@ -1,4 +1,5 @@
 import * as github from '@actions/github'
+import * as core from '@actions/core'
 import {
   PullRequest,
   WorkflowRunEvent
@@ -6,6 +7,7 @@ import {
 import {RestEndpointMethodTypes} from '@octokit/plugin-rest-endpoint-methods'
 import {getStringInput, payloadOrInput} from '../helpers/inputHelpers'
 import {useOctokit, Octokit} from '../helpers/useOctokit'
+import { countReset } from 'console'
 
 type PullsList = RestEndpointMethodTypes['pulls']['list']
 type PullsListParameters = PullsList['parameters']
@@ -20,6 +22,7 @@ export async function workflowGetPullRequest(): Promise<
   PullRequest | undefined
 > {
   const payload = payloadOrInput<'workflow_run'>('workflowPayload')
+  core.debug("workflowGetPullRequest:" + JSON.stringify(payload))
   return await useOctokit(async octokit => {
     switch (payload.workflow_run.event) {
       case 'push':
