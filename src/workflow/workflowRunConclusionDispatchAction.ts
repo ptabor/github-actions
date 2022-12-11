@@ -14,7 +14,7 @@ import {useOctokit} from '../helpers/useOctokit'
 */
 export async function workflowRunConclusionDispatchAction(): Promise<void> {
   return trySetFailedAsync(async () => {
-    core.debug(JSON.stringify(github.context.payload));
+    core.debug(JSON.stringify(github.context.payload))
     const payload = github.context.payload as EventPayloadMap['workflow_run']
     let event = ''
     if (getBoolInput('eventNameInEventType')) {
